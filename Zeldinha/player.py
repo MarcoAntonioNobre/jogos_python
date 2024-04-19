@@ -17,12 +17,11 @@ def sairDoJogo():
     sys.exit()
 
 def stop():
-    main_sound = pygame.mixer.Sound('./audio/main.ogg')
+    pygame.mixer.quit()
 
 def reiniciarJogo():
     import main
-    main_sound = pygame.mixer.Sound('./audio/main.ogg')
-    main_sound.stop()
+    stop()
     game = main.Game()
     game.run()
 
