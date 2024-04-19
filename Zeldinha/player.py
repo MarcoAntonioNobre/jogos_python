@@ -1,18 +1,17 @@
 import sys
-import tkinter as tk
-from tkinter import messagebox
-
 import pygame
-
 from entity import Entity
 from settings import *
 from support import import_folder
 
+import time
 
-def exibir_mensagem_tkinter():
-    messagebox.showinfo('Cadastro Concluído', 'Cadastro aplicado com sucesso!')
+# Definição das cores
+WHITE = (255, 255, 255)
+BLACK = (0, 0, 0)
+GRAY = (200, 200, 200)
 
-
+telaFinal = pygame.display.set_mode((WIDTH, HEIGHT))
 def sairDoJogo():
     pygame.quit()
     sys.exit()
@@ -22,21 +21,33 @@ def reiniciarJogo():
     f = open('main.py', 'r')
     f.read()
 
+WHITE = (255, 255, 255)
+BLACK = (0, 0, 0)
+GRAY = (200, 200, 200)
 
-janela_tkinter = tk.Tk()
+class Button:
+    def __init__(self, text, position, size, color, text_color, action):
+        self.text = text
+        self.position = position
+        self.size = size
+        self.color = color
+        self.text_color = text_color
+        self.action = action
 
-janela_tkinter.title('Formulário')
-janela_tkinter.geometry('500x500')
+    def draw(self, screen):
+        pygame.draw.rect(screen, self.color, (self.position, self.size))
+        font = pygame.font.Font(None, 36)
+        text_surface = font.render(self.text, True, self.text_color)
+        text_rect = text_surface.get_rect(center=(self.position[0] + self.size[0] / 2, self.position[1] + self.size[1] / 2))
+        screen.blit(text_surface, text_rect)
 
-bt_tkinter = tk.Button(janela_tkinter, text="Reiniciar", command=reiniciarJogo)
-bt_tkinter.pack(side="bottom", fill="none", expand=False, pady=5, padx=5)
+    def is_clicked(self, mouse_pos):
+        x, y = mouse_pos
+        if self.position[0] < x < self.position[0] + self.size[0] and self.position[1] < y < self.position[1] + self.size[1]:
+            return True
+        return False
 
-bt_exibir = tk.Button(janela_tkinter, text="Sair", command=sairDoJogo)
-bt_exibir.pack(side="bottom", fill="none", expand=False, pady=5, padx=5)
-
-
-
-
+button = Button("Clique aqui", (150, 100), (100, 50), GRAY, BLACK, sairDoJogo)
 
 class Player(Entity):
     def __init__(self, pos, groups, obstacle_sprites, create_attack, destroy_attack, create_magic):
@@ -92,6 +103,9 @@ class Player(Entity):
         self.death_sound = pygame.mixer.Sound('./audio/death.wav')
         self.death_sound.set_volume(0.6)
 
+
+
+
     def import_player_assets(self):
         character_path = './graphics/player/'
         self.animations = {'up': [], 'down': [], 'left': [], 'right': [],
@@ -102,19 +116,57 @@ class Player(Entity):
             full_path = character_path + animation
             self.animations[animation] = import_folder(full_path)
 
+
     def morte(self):
         if self.health <= 0:
-            # telaFinal = pygame.display.set_mode((500, 500))
-            # telaFinal.fill((0, 0, 0))
-            # fonte = pygame.font.SysFont('Arial', 50)
-            # texto = fonte.render('Morte', True, (255, 255, 255))
-            # telaFinal.blit(texto, (0, 0))
+            tela_morte = pygame.display.set_mode((WIDTH, HEIGHT))
+            pygame.display.set_caption("Zeldinha")
+
+            fonte = pygame.font.SysFont('Arial', 60)
+            texto = fonte.render('GAME OVER', True, (255, 255, 255))
+
+            tela_morte.fill((0, 0, 0))
+
+            botao_reiniciar = Button("Reiniciar", (WIDTH_GAMEOVER_BUTTON, HEIGHT_GAMEOVER_BUTTON_RESTART), (150, 50), GRAY, BLACK, reiniciarJogo)
+            botao_sair = Button("Sair do Jogo", (WIDTH_GAMEOVER_BUTTON, HEIGHT_GAMEOVER_BUTTON_SAIR), (150, 50), GRAY, BLACK, sairDoJogo)
+
+            while True:
+                for event in pygame.event.get():
+                    if event.type == pygame.QUIT:
+                        pygame.quit()
+                        sys.exit()
+                    elif event.type == pygame.MOUSEBUTTONDOWN:
+                        mouse_pos = pygame.mouse.get_pos()
+                        if botao_reiniciar.is_clicked(mouse_pos):
+                            reiniciarJogo()
+                        elif botao_sair.is_clicked(mouse_pos):
+                            sairDoJogo()
+
+                telaFinal.blit(texto, (WIDTH_GAMEOVER, HEIGTH_GAMEOVER))
+                botao_reiniciar.draw(tela_morte)
+                botao_sair.draw(tela_morte)
+
+                pygame.display.flip()
 
 
-            self.kill()
-            # janela_tkinter.mainloop()
-            # pygame.quit()
-            # sys.exit()
+        # if self.health <= 0:
+        #     while self.health <= 0:
+        #
+        #         telaFinal.fill((185, 185, 185))
+        #         fonte = pygame.font.SysFont('Arial', 60)
+        #         texto = fonte.render('GAME OVER', True, (0, 0, 0))
+        #         telaFinal.blit(texto, (WIDTH_GAMEOVER, HEIGTH_GAMEOVER))
+        #         self.kill()
+        #
+        #         pygame.display.update()
+        #
+        #         time.sleep(1)
+        #         pygame.quit()
+        #         # sys.exit()
+
+
+
+
 
     def input(self):
         if not self.attacking:
