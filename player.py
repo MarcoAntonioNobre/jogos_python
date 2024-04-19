@@ -12,16 +12,21 @@ BLACK = (0, 0, 0)
 GRAY = (200, 200, 200)
 
 telaFinal = pygame.display.set_mode((WIDTH, HEIGHT))
+
+
 def sairDoJogo():
     pygame.quit()
     sys.exit()
 
+
+
 def stop():
-    pygame.mixer.quit()
+    main_sound = pygame.mixer.Sound('./audio/main.ogg')
+
 
 def reiniciarJogo():
     import main
-    stop()
+    pygame.mixer.quit()
     game = main.Game()
     game.run()
 
@@ -30,6 +35,9 @@ def reiniciarJogo():
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
 GRAY = (200, 200, 200)
+RED = (231, 76, 60)
+GREEN = (46, 204, 113)
+YELLOW = (241, 196, 15)
 
 class Button:
     def __init__(self, text, position, size, color, text_color, action):
@@ -41,7 +49,7 @@ class Button:
         self.action = action
 
     def draw(self, screen):
-        pygame.draw.rect(screen, self.color, (self.position, self.size))
+        pygame.draw.rect(screen, self.color, (self.position, self.size), border_radius=10)
         font = pygame.font.Font(None, 36)
         text_surface = font.render(self.text, True, self.text_color)
         text_rect = text_surface.get_rect(center=(self.position[0] + self.size[0] / 2, self.position[1] + self.size[1] / 2))
@@ -126,17 +134,21 @@ class Player(Entity):
     def morte(self):
         if self.health <= 0:
 
-
             tela_morte = pygame.display.set_mode((WIDTH, HEIGHT))
-            pygame.display.set_caption("Zeldinha")
+            pygame.display.set_caption("Zelda")
+
+            imagem = pygame.image.load('./graphics/fundobrabo.jpg').convert()
+            imagem = pygame.transform.scale(imagem, (WIDTH, HEIGHT))
+            tela_morte.blit(imagem, (0, 0))
 
             fonte = pygame.font.SysFont('Arial', 60)
             texto = fonte.render('GAME OVER', True, (255, 255, 255))
+            texto2 = fonte.render('GAME OVER', True, (0, 0, 0))
 
-            tela_morte.fill((0, 0, 0))
-
-            botao_reiniciar = Button("Reiniciar", (WIDTH_GAMEOVER_BUTTON, HEIGHT_GAMEOVER_BUTTON_RESTART), (150, 50), GRAY, BLACK, reiniciarJogo)
-            botao_sair = Button("Sair do Jogo", (WIDTH_GAMEOVER_BUTTON, HEIGHT_GAMEOVER_BUTTON_SAIR), (150, 50), GRAY, BLACK, sairDoJogo)
+            botao_reiniciar2 = Button("Reiniciar", (WIDTH_GAMEOVER_BUTTON, HEIGHT_GAMEOVER_BUTTON_RESTART), (173, 53), BLACK, BLACK, reiniciarJogo)
+            botao_reiniciar = Button("Reiniciar", (WIDTH_GAMEOVER_BUTTON, HEIGHT_GAMEOVER_BUTTON_RESTART), (170, 50), YELLOW, BLACK, reiniciarJogo)
+            botao_sair2 = Button("Sair do Jogo", (WIDTH_GAMEOVER_BUTTON, HEIGHT_GAMEOVER_BUTTON_SAIR), (173, 53), BLACK, BLACK, sairDoJogo)
+            botao_sair = Button("Sair do Jogo", (WIDTH_GAMEOVER_BUTTON, HEIGHT_GAMEOVER_BUTTON_SAIR), (170, 50), RED, WHITE, sairDoJogo)
 
             while True:
                 for event in pygame.event.get():
@@ -150,29 +162,14 @@ class Player(Entity):
                         elif botao_sair.is_clicked(mouse_pos):
                             sairDoJogo()
 
+                telaFinal.blit(texto2, (WIDTH_GAMEOVER2, HEIGTH_GAMEOVER2))
                 telaFinal.blit(texto, (WIDTH_GAMEOVER, HEIGTH_GAMEOVER))
+                botao_reiniciar2.draw(tela_morte)
                 botao_reiniciar.draw(tela_morte)
+                botao_sair2.draw(tela_morte)
                 botao_sair.draw(tela_morte)
 
                 pygame.display.flip()
-
-
-        # if self.health <= 0:
-        #     while self.health <= 0:
-        #
-        #         telaFinal.fill((185, 185, 185))
-        #         fonte = pygame.font.SysFont('Arial', 60)
-        #         texto = fonte.render('GAME OVER', True, (0, 0, 0))
-        #         telaFinal.blit(texto, (WIDTH_GAMEOVER, HEIGTH_GAMEOVER))
-        #         self.kill()
-        #
-        #         pygame.display.update()
-        #
-        #         time.sleep(1)
-        #         pygame.quit()
-        #         # sys.exit()
-
-
 
 
 
