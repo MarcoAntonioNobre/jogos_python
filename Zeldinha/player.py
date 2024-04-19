@@ -16,10 +16,17 @@ def sairDoJogo():
     pygame.quit()
     sys.exit()
 
+def stop():
+    main_sound = pygame.mixer.Sound('./audio/main.ogg')
 
 def reiniciarJogo():
-    f = open('main.py', 'r')
-    f.read()
+    import main
+    main_sound = pygame.mixer.Sound('./audio/main.ogg')
+    main_sound.stop()
+    game = main.Game()
+    game.run()
+
+
 
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
@@ -119,6 +126,8 @@ class Player(Entity):
 
     def morte(self):
         if self.health <= 0:
+
+
             tela_morte = pygame.display.set_mode((WIDTH, HEIGHT))
             pygame.display.set_caption("Zeldinha")
 
