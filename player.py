@@ -61,7 +61,6 @@ class Button:
             return True
         return False
 
-button = Button("Clique aqui", (150, 100), (100, 50), GRAY, BLACK, sairDoJogo)
 
 class Player(Entity):
     def __init__(self, pos, groups, obstacle_sprites, create_attack, destroy_attack, create_magic):
