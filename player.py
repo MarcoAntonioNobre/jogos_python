@@ -95,13 +95,14 @@ class Player(Entity):
         self.magic_switch_time = None
 
         # stats
-        self.stats = {'health': 100, 'energy': 90, 'attack': 10, 'magic': 4, 'speed': 5}
+        self.stats = {'health': 100000000, 'energy': 900000, 'attack': 1000000, 'magic': 4000000, 'speed': 5}
         self.max_stats = {'health': 300, 'energy': 160, 'attack': 20, 'magic': 10, 'speed': 10}
         self.upgrade_cost = {'health': 100, 'energy': 100, 'attack': 100, 'magic': 100, 'speed': 100}
         self.health = self.stats['health']
         self.energy = self.stats['energy'] * 0.8
 
         self.exp = 0
+        self.total_exp = 0
         self.speed = self.stats['speed']
 
         # damage timer
@@ -172,7 +173,7 @@ class Player(Entity):
 
     def vitoria(self):
 
-        if self.exp == 4180:
+        if self.total_exp >= 1:
 
             tela_vitoria = pygame.display.set_mode((WIDTH, HEIGHT))
             pygame.display.set_caption("Zelda")
@@ -182,13 +183,13 @@ class Player(Entity):
             tela_vitoria.blit(imagem, (0, 0))
 
             fonte = pygame.font.SysFont('Arial', 60)
-            texto = fonte.render('VOCÊ GANHOU!', True, (255, 255, 255))
-            texto2 = fonte.render('VOCÊ GANHOU!', True, (0, 0, 0))
+            texto = fonte.render('Você Ganhou!', True, (255, 255, 255))
+            texto2 = fonte.render('Você Ganhou!', True, (0, 0, 0))
 
-            botao_reiniciar2 = Button("Reiniciar", (WIDTH_GAMEOVER_BUTTON, HEIGHT_GAMEOVER_BUTTON_RESTART), (173, 53), BLACK, BLACK, reiniciarJogo)
-            botao_reiniciar = Button("Reiniciar", (WIDTH_GAMEOVER_BUTTON, HEIGHT_GAMEOVER_BUTTON_RESTART), (170, 50), YELLOW, BLACK, reiniciarJogo)
-            botao_sair2 = Button("Sair do Jogo", (WIDTH_GAMEOVER_BUTTON, HEIGHT_GAMEOVER_BUTTON_SAIR), (173, 53), BLACK, BLACK, sairDoJogo)
-            botao_sair = Button("Sair do Jogo", (WIDTH_GAMEOVER_BUTTON, HEIGHT_GAMEOVER_BUTTON_SAIR), (170, 50), RED, WHITE, sairDoJogo)
+            botao_reiniciar2 = Button("Jogar Novamente", (WIDTH_GAMEOVER_BUTTON, HEIGHT_GAMEOVER_BUTTON_RESTART), (223, 53), BLACK, BLACK, reiniciarJogo)
+            botao_reiniciar = Button("Jogar Novamente", (WIDTH_GAMEOVER_BUTTON, HEIGHT_GAMEOVER_BUTTON_RESTART), (220, 50), GREEN, BLACK, reiniciarJogo)
+            botao_sair2 = Button("Sair do Jogo", (WIDTH_GAMEOVER_BUTTON, HEIGHT_GAMEOVER_BUTTON_SAIR), (223, 53), BLACK, BLACK, sairDoJogo)
+            botao_sair = Button("Sair do Jogo", (WIDTH_GAMEOVER_BUTTON, HEIGHT_GAMEOVER_BUTTON_SAIR), (220, 50), RED, WHITE, sairDoJogo)
 
             while True:
                 for event in pygame.event.get():
@@ -354,6 +355,7 @@ class Player(Entity):
 
     def update(self):
         self.morte()
+        self.vitoria()
         self.input()
         self.cooldowns()
         self.get_status()

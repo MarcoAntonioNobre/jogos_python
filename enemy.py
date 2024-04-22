@@ -139,6 +139,7 @@ class Enemy(Entity):
             self.kill()
             self.trigger_death_particles(self.rect.center, self.monster_name)
             self.add_exp(self.exp)
+
             self.death_sound.play()
 
     def hit_reaction(self):

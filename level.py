@@ -191,6 +191,8 @@ class Level:
 
 	def add_exp(self, amount):
 		self.player.exp += amount
+		self.player.total_exp += amount
+
 
 	def toggle_menu(self):
 
