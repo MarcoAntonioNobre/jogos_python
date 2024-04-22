@@ -1,4 +1,4 @@
-import pygame 
+import pygame , sys
 from settings import *
 from tile import Tile
 from player import Player
@@ -11,6 +11,59 @@ from enemy import Enemy
 from particles import AnimationPlayer
 from magic import MagicPlayer
 from upgrade import Upgrade
+
+
+
+def sairDoJogo():
+	pygame.quit()
+	sys.exit()
+
+
+
+def stop():
+	main_sound = pygame.mixer.Sound('./audio/main.ogg')
+
+
+def reiniciarJogo():
+	import main
+	pygame.mixer.quit()
+	game = main.Game()
+	game.run()
+
+WHITE = (255, 255, 255)
+BLACK = (0, 0, 0)
+GRAY = (200, 200, 200)
+RED = (231, 76, 60)
+GREEN = (46, 204, 113)
+YELLOW = (241, 196, 15)
+
+
+class Button:
+	def __init__(self, text, position, size, color, text_color, action):
+		self.text = text
+		self.position = position
+		self.size = size
+		self.color = color
+		self.text_color = text_color
+		self.action = action
+
+	def draw(self, screen):
+		pygame.draw.rect(screen, self.color, (self.position, self.size), border_radius=10)
+		font = pygame.font.Font(None, 36)
+		text_surface = font.render(self.text, True, self.text_color)
+		text_rect = text_surface.get_rect(center=(self.position[0] + self.size[0] / 2, self.position[1] + self.size[1] / 2))
+		screen.blit(text_surface, text_rect)
+
+	def is_clicked(self, mouse_pos):
+		x, y = mouse_pos
+		if self.position[0] < x < self.position[0] + self.size[0] and self.position[1] < y < self.position[1] + self.size[1]:
+			return True
+		return False
+
+
+
+
+
 
 class Level:
 	def __init__(self):
@@ -69,12 +122,12 @@ class Level:
 
 						if style == 'object':
 							surf = graphics['objects'][int(col)]
-							Tile((x,y),[self.visible_sprites,self.obstacle_sprites],'object',surf)
+							Tile((x, y),[self.visible_sprites,self.obstacle_sprites],'object',surf)
 
 						if style == 'entities':
 							if col == '394':
 								self.player = Player(
-									(x,y),
+									(x, y),
 									[self.visible_sprites],
 									self.obstacle_sprites,
 									self.create_attack,
@@ -87,7 +140,7 @@ class Level:
 								else: monster_name = 'squid'
 								Enemy(
 									monster_name,
-									(x,y),
+									(x, y),
 									[self.visible_sprites,self.attackable_sprites],
 									self.obstacle_sprites,
 									self.damage_player,
@@ -96,14 +149,14 @@ class Level:
 
 	def create_attack(self):
 		
-		self.current_attack = Weapon(self.player,[self.visible_sprites,self.attack_sprites])
+		self.current_attack = Weapon(self.player, [self.visible_sprites,self.attack_sprites])
 
-	def create_magic(self,style,strength,cost):
+	def create_magic(self, style, strength, cost):
 		if style == 'heal':
-			self.magic_player.heal(self.player,strength,cost,[self.visible_sprites])
+			self.magic_player.heal(self.player, strength, cost, [self.visible_sprites])
 
 		if style == 'flame':
-			self.magic_player.flame(self.player,cost,[self.visible_sprites,self.attack_sprites])
+			self.magic_player.flame(self.player, cost, [self.visible_sprites,self.attack_sprites])
 
 	def destroy_attack(self):
 		if self.current_attack:
@@ -125,19 +178,18 @@ class Level:
 						else:
 							target_sprite.get_damage(self.player,attack_sprite.sprite_type)
 
-	def damage_player(self,amount,attack_type):
+	def damage_player(self, amount, attack_type):
 		if self.player.vulnerable:
 			self.player.health -= amount
 			self.player.vulnerable = False
 			self.player.hurt_time = pygame.time.get_ticks()
 			self.animation_player.create_particles(attack_type,self.player.rect.center,[self.visible_sprites])
 
-	def trigger_death_particles(self,pos,particle_type):
+	def trigger_death_particles(self, pos, particle_type):
 
-		self.animation_player.create_particles(particle_type,pos,self.visible_sprites)
+		self.animation_player.create_particles(particle_type, pos, self.visible_sprites)
 
-	def add_exp(self,amount):
-
+	def add_exp(self, amount):
 		self.player.exp += amount
 
 	def toggle_menu(self):
@@ -168,9 +220,9 @@ class YSortCameraGroup(pygame.sprite.Group):
 
 		# creating the floor
 		self.floor_surf = pygame.image.load('./graphics/tilemap/ground.png').convert()
-		self.floor_rect = self.floor_surf.get_rect(topleft = (0,0))
+		self.floor_rect = self.floor_surf.get_rect(topleft=(0, 0))
 
-	def custom_draw(self,player):
+	def custom_draw(self, player):
 
 		# getting the offset 
 		self.offset.x = player.rect.centerx - self.half_width
@@ -181,11 +233,11 @@ class YSortCameraGroup(pygame.sprite.Group):
 		self.display_surface.blit(self.floor_surf,floor_offset_pos)
 
 		# for sprite in self.sprites():
-		for sprite in sorted(self.sprites(),key = lambda sprite: sprite.rect.centery):
+		for sprite in sorted(self.sprites(), key=lambda sprite: sprite.rect.centery):
 			offset_pos = sprite.rect.topleft - self.offset
 			self.display_surface.blit(sprite.image,offset_pos)
 
-	def enemy_update(self,player):
-		enemy_sprites = [sprite for sprite in self.sprites() if hasattr(sprite,'sprite_type') and sprite.sprite_type == 'enemy']
+	def enemy_update(self, player):
+		enemy_sprites = [sprite for sprite in self.sprites() if hasattr(sprite, 'sprite_type') and sprite.sprite_type == 'enemy']
 		for enemy in enemy_sprites:
 			enemy.enemy_update(player)

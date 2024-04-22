@@ -4,6 +4,7 @@ from entity import Entity
 from settings import *
 from support import import_folder
 
+
 import time
 
 # Definição das cores
@@ -29,8 +30,6 @@ def reiniciarJogo():
     pygame.mixer.quit()
     game = main.Game()
     game.run()
-
-
 
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
@@ -101,6 +100,7 @@ class Player(Entity):
         self.upgrade_cost = {'health': 100, 'energy': 100, 'attack': 100, 'magic': 100, 'speed': 100}
         self.health = self.stats['health']
         self.energy = self.stats['energy'] * 0.8
+
         self.exp = 0
         self.speed = self.stats['speed']
 
@@ -115,8 +115,6 @@ class Player(Entity):
 
         self.death_sound = pygame.mixer.Sound('./audio/death.wav')
         self.death_sound.set_volume(0.6)
-
-
 
 
     def import_player_assets(self):
@@ -171,6 +169,47 @@ class Player(Entity):
                 pygame.display.flip()
 
 
+
+    def vitoria(self):
+
+        if self.exp == 4180:
+
+            tela_vitoria = pygame.display.set_mode((WIDTH, HEIGHT))
+            pygame.display.set_caption("Zelda")
+
+            imagem = pygame.image.load('./graphics/fundobrabo.jpg').convert()
+            imagem = pygame.transform.scale(imagem, (WIDTH, HEIGHT))
+            tela_vitoria.blit(imagem, (0, 0))
+
+            fonte = pygame.font.SysFont('Arial', 60)
+            texto = fonte.render('VOCÊ GANHOU!', True, (255, 255, 255))
+            texto2 = fonte.render('VOCÊ GANHOU!', True, (0, 0, 0))
+
+            botao_reiniciar2 = Button("Reiniciar", (WIDTH_GAMEOVER_BUTTON, HEIGHT_GAMEOVER_BUTTON_RESTART), (173, 53), BLACK, BLACK, reiniciarJogo)
+            botao_reiniciar = Button("Reiniciar", (WIDTH_GAMEOVER_BUTTON, HEIGHT_GAMEOVER_BUTTON_RESTART), (170, 50), YELLOW, BLACK, reiniciarJogo)
+            botao_sair2 = Button("Sair do Jogo", (WIDTH_GAMEOVER_BUTTON, HEIGHT_GAMEOVER_BUTTON_SAIR), (173, 53), BLACK, BLACK, sairDoJogo)
+            botao_sair = Button("Sair do Jogo", (WIDTH_GAMEOVER_BUTTON, HEIGHT_GAMEOVER_BUTTON_SAIR), (170, 50), RED, WHITE, sairDoJogo)
+
+            while True:
+                for event in pygame.event.get():
+                    if event.type == pygame.QUIT:
+                        pygame.quit()
+                        sys.exit()
+                    elif event.type == pygame.MOUSEBUTTONDOWN:
+                        mouse_pos = pygame.mouse.get_pos()
+                        if botao_reiniciar.is_clicked(mouse_pos):
+                            reiniciarJogo()
+                        elif botao_sair.is_clicked(mouse_pos):
+                            sairDoJogo()
+
+                telaFinal.blit(texto2, (WIDTH_GAMEOVER2, HEIGTH_GAMEOVER2))
+                telaFinal.blit(texto, (WIDTH_GAMEOVER, HEIGTH_GAMEOVER))
+                botao_reiniciar2.draw(tela_vitoria)
+                botao_reiniciar.draw(tela_vitoria)
+                botao_sair2.draw(tela_vitoria)
+                botao_sair.draw(tela_vitoria)
+
+                pygame.display.flip()
 
     def input(self):
         if not self.attacking:

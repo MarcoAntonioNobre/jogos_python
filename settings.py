@@ -1,16 +1,16 @@
 # game setup
-WIDTH    = 1600
-HEIGHT   = 900
-WIDTH_GAMEOVER  = (WIDTH/100)*40
+WIDTH = 1600
+HEIGHT = 900
+WIDTH_GAMEOVER = (WIDTH/100)*40
 HEIGTH_GAMEOVER = (HEIGHT/100)*36
 
-WIDTH_GAMEOVER2  = (WIDTH/100)*40-1
+WIDTH_GAMEOVER2 = (WIDTH/100)*40-1
 HEIGTH_GAMEOVER2 = (HEIGHT/100)*36-1
 WIDTH_GAMEOVER_BUTTON = (WIDTH/100)*45
 HEIGHT_GAMEOVER_BUTTON_RESTART = (HEIGHT/100)*50
 HEIGHT_GAMEOVER_BUTTON_SAIR = (HEIGHT/100)*57
 
-FPS      = 60
+FPS = 60
 TILESIZE = 64
 HITBOX_OFFSET = {
 	'player': -26,
@@ -45,11 +45,11 @@ UPGRADE_BG_COLOR_SELECTED = '#EEEEEE'
 
 # weapons 
 weapon_data = {
-	'sword': {'cooldown': 100, 'damage': 15,'graphic':'./graphics/weapons/sword/full.png'},
-	'lance': {'cooldown': 400, 'damage': 30,'graphic':'./graphics/weapons/lance/full.png'},
-	'axe': {'cooldown': 300, 'damage': 20, 'graphic':'./graphics/weapons/axe/full.png'},
-	'rapier':{'cooldown': 50, 'damage': 8, 'graphic':'./graphics/weapons/rapier/full.png'},
-	'sai':{'cooldown': 80, 'damage': 10, 'graphic':'./graphics/weapons/sai/full.png'}}
+	'sword': {'cooldown': 100, 'damage': 15, 'graphic': './graphics/weapons/sword/full.png'},
+	'lance': {'cooldown': 400, 'damage': 30, 'graphic': './graphics/weapons/lance/full.png'},
+	'axe': {'cooldown': 300, 'damage': 20, 'graphic': './graphics/weapons/axe/full.png'},
+	'rapier': {'cooldown': 50, 'damage': 8, 'graphic': './graphics/weapons/rapier/full.png'},
+	'sai': {'cooldown': 80, 'damage': 10, 'graphic': './graphics/weapons/sai/full.png'}}
 
 # magic
 magic_data = {
@@ -58,7 +58,7 @@ magic_data = {
 
 # enemy
 monster_data = {
-	'squid': {'health': 100,'exp':100,'damage':20,'attack_type': 'slash', 'attack_sound':'./audio/attack/slash.wav', 'speed': 3, 'resistance': 3, 'attack_radius': 80, 'notice_radius': 360},
-	'raccoon': {'health': 300,'exp':250,'damage':40,'attack_type': 'claw',  'attack_sound':'./audio/attack/claw.wav','speed': 2, 'resistance': 3, 'attack_radius': 120, 'notice_radius': 400},
-	'spirit': {'health': 100,'exp':110,'damage':8,'attack_type': 'thunder', 'attack_sound':'./audio/attack/fireball.wav', 'speed': 4, 'resistance': 3, 'attack_radius': 60, 'notice_radius': 350},
-	'bamboo': {'health': 70,'exp':120,'damage':6,'attack_type': 'leaf_attack', 'attack_sound':'./audio/attack/slash.wav', 'speed': 3, 'resistance': 3, 'attack_radius': 50, 'notice_radius': 300}}
+	'squid': {'health': 100, 'exp': 100, 'damage': 25, 'attack_type': 'slash', 'attack_sound': './audio/attack/slash.wav', 'speed': 5, 'resistance': 3, 'attack_radius': 80, 'notice_radius': 360},
+	'raccoon': {'health': 400, 'exp': 250, 'damage': 60, 'attack_type': 'claw',  'attack_sound': './audio/attack/claw.wav', 'speed': 4, 'resistance': 3, 'attack_radius': 120, 'notice_radius': 400},
+	'spirit': {'health': 100, 'exp': 110, 'damage': 10, 'attack_type': 'thunder', 'attack_sound': './audio/attack/fireball.wav', 'speed': 6, 'resistance': 3, 'attack_radius': 60, 'notice_radius': 350},
+	'bamboo': {'health': 70, 'exp': 120, 'damage': 8, 'attack_type': 'leaf_attack', 'attack_sound': './audio/attack/slash.wav', 'speed': 3, 'resistance': 3, 'attack_radius': 50, 'notice_radius': 300}}
