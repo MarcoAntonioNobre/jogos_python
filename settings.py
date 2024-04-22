@@ -9,6 +9,8 @@ HEIGTH_GAMEOVER2 = (HEIGHT/100)*36-1
 WIDTH_GAMEOVER_BUTTON = (WIDTH/100)*45
 HEIGHT_GAMEOVER_BUTTON_RESTART = (HEIGHT/100)*50
 HEIGHT_GAMEOVER_BUTTON_SAIR = (HEIGHT/100)*57
+WIDTH_GAMEOVER_BUTTON_TELA_PAUSE = (WIDTH/100)*40-5
+HEIGHT_GAMEOVER_BUTTON_SAIR_TELA_PAUSE = (HEIGHT/100)*92
 
 FPS = 60
 TILESIZE = 64
@@ -58,7 +60,8 @@ magic_data = {
 
 # enemy
 monster_data = {
-	'squid': {'health': 100, 'exp': 100, 'damage': 25, 'attack_type': 'slash', 'attack_sound': './audio/attack/slash.wav', 'speed': 5, 'resistance': 3, 'attack_radius': 80, 'notice_radius': 360},
-	'raccoon': {'health': 400, 'exp': 250, 'damage': 60, 'attack_type': 'claw',  'attack_sound': './audio/attack/claw.wav', 'speed': 4, 'resistance': 3, 'attack_radius': 120, 'notice_radius': 400},
-	'spirit': {'health': 100, 'exp': 110, 'damage': 10, 'attack_type': 'thunder', 'attack_sound': './audio/attack/fireball.wav', 'speed': 6, 'resistance': 3, 'attack_radius': 60, 'notice_radius': 350},
-	'bamboo': {'health': 70, 'exp': 120, 'damage': 8, 'attack_type': 'leaf_attack', 'attack_sound': './audio/attack/slash.wav', 'speed': 3, 'resistance': 3, 'attack_radius': 50, 'notice_radius': 300}}
+	'squid': {'health': 100, 'exp': 110, 'damage': 25, 'attack_type': 'slash', 'attack_sound': './audio/attack/slash.wav', 'speed': 5, 'resistance': 3, 'attack_radius': 80, 'notice_radius': 360},
+	'raccoon': {'health': 400, 'exp': 500, 'damage': 60, 'attack_type': 'claw',  'attack_sound': './audio/attack/claw.wav', 'speed': 6, 'resistance': 3, 'attack_radius': 120, 'notice_radius': 400},
+	'spirit': {'health': 100, 'exp': 150, 'damage': 10, 'attack_type': 'thunder', 'attack_sound': './audio/attack/fireball.wav', 'speed': 4, 'resistance': 3, 'attack_radius': 60, 'notice_radius': 350},
+	'bamboo': {'health': 70, 'exp': 140, 'damage': 8, 'attack_type': 'leaf_attack', 'attack_sound': './audio/attack/slash.wav', 'speed': 3, 'resistance': 3, 'attack_radius': 50, 'notice_radius': 300}}
+

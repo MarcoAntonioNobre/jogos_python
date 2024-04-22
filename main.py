@@ -27,7 +27,7 @@ class Game:
                     pygame.quit()
                     sys.exit()
                 if event.type == pygame.KEYDOWN:
-                    if event.key == pygame.K_p:
+                    if event.key == pygame.K_p or event.key == pygame.K_ESCAPE:
                         self.level.toggle_menu()
 
             self.screen.fill(WATER_COLOR)

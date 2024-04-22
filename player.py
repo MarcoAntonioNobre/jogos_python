@@ -8,9 +8,7 @@ from support import import_folder
 import time
 
 # Definição das cores
-WHITE = (255, 255, 255)
-BLACK = (0, 0, 0)
-GRAY = (200, 200, 200)
+
 
 telaFinal = pygame.display.set_mode((WIDTH, HEIGHT))
 
@@ -95,9 +93,9 @@ class Player(Entity):
         self.magic_switch_time = None
 
         # stats
-        self.stats = {'health': 100000000, 'energy': 900000, 'attack': 1000000, 'magic': 4000000, 'speed': 5}
+        self.stats = {'health': 100, 'energy': 90, 'attack': 10, 'magic': 4, 'speed': 5}
         self.max_stats = {'health': 300, 'energy': 160, 'attack': 20, 'magic': 10, 'speed': 10}
-        self.upgrade_cost = {'health': 100, 'energy': 100, 'attack': 100, 'magic': 100, 'speed': 100}
+        self.upgrade_cost = {'health': 80, 'energy': 95, 'attack': 80, 'magic': 110, 'speed': 200}
         self.health = self.stats['health']
         self.energy = self.stats['energy'] * 0.8
 
@@ -173,7 +171,7 @@ class Player(Entity):
 
     def vitoria(self):
 
-        if self.total_exp >= 1:
+        if self.total_exp >= 5300:
 
             tela_vitoria = pygame.display.set_mode((WIDTH, HEIGHT))
             pygame.display.set_caption("Zelda")
@@ -354,6 +352,7 @@ class Player(Entity):
             self.energy = self.stats['energy']
 
     def update(self):
+
         self.morte()
         self.vitoria()
         self.input()
