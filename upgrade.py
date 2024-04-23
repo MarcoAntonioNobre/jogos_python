@@ -98,6 +98,16 @@ class Upgrade:
         for index, item in enumerate(self.item_list):
             # get attributes
             name = self.attribute_names[index]
+            if self.attribute_names[index] == 'health':
+                name = 'Vida'
+            elif self.attribute_names[index] == 'speed':
+                name = 'Velocidade'
+            elif self.attribute_names[index] == 'energy':
+                name = 'Vitalidade'
+            elif self.attribute_names[index] == 'attack':
+                name = 'Força Bruta'
+            else:
+                name = 'Força Mágica'
             value = self.player.get_value_by_index(index)
             max_value = self.max_values[index]
             cost = self.player.get_cost_by_index(index)
