@@ -1,5 +1,3 @@
-import pygame
-
 from entity import Entity
 from settings import *
 from support import *
@@ -38,6 +36,11 @@ class Enemy(Entity):
         self.can_attack = True
         self.attack_time = None
         self.attack_cooldown = 400
+        if self.monster_name == 'squid':
+            self.attack_cooldown = 700
+        elif self.monster_name == 'raccoon':
+            self.attack_cooldown = 900
+
         self.damage_player = damage_player
         self.trigger_death_particles = trigger_death_particles
         self.add_exp = add_exp

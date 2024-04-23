@@ -131,7 +131,7 @@ class Player(Entity):
         if self.health <= 0:
 
             tela_morte = pygame.display.set_mode((WIDTH, HEIGHT))
-            pygame.display.set_caption("Zelda")
+            pygame.display.set_caption("Zelda ACM - Você perdeu")
 
             imagem = pygame.image.load('./graphics/fundobrabo.jpg').convert()
             imagem = pygame.transform.scale(imagem, (WIDTH, HEIGHT))
@@ -174,7 +174,7 @@ class Player(Entity):
         if self.total_exp >= 5300:
 
             tela_vitoria = pygame.display.set_mode((WIDTH, HEIGHT))
-            pygame.display.set_caption("Zelda")
+            pygame.display.set_caption("Zelda ACM - Você ganhou")
 
             imagem = pygame.image.load('./graphics/fundobrabo.jpg').convert()
             imagem = pygame.transform.scale(imagem, (WIDTH, HEIGHT))
