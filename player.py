@@ -4,9 +4,6 @@ from entity import Entity
 from settings import *
 from support import import_folder
 
-
-import time
-
 # Definição das cores
 
 
@@ -171,7 +168,7 @@ class Player(Entity):
 
     def vitoria(self):
 
-        if self.total_exp >= 5300:
+        if self.total_exp >= 6210:
 
             tela_vitoria = pygame.display.set_mode((WIDTH, HEIGHT))
             pygame.display.set_caption("Zelda ACM - Você ganhou")
@@ -350,6 +347,9 @@ class Player(Entity):
             self.energy += 0.01 * self.stats['magic']
         else:
             self.energy = self.stats['energy']
+
+
+
 
     def update(self):
 
